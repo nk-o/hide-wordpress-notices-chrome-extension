@@ -1,0 +1,22 @@
+{
+  "name": "Hide WordPress Notices",
+  "background": {
+    "scripts": ["hot-reload.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/wp-admin*",
+        "*://*/*/wp-admin*"
+      ],
+      "js": ["main.js"],
+      "css": ["main.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}
