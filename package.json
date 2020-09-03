@@ -1,6 +1,6 @@
 {
   "name": "hide-wordpress-notices-chrome-extension",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hide that bunch of notices from WordPress dashboard",
   "scripts": {
     "build": "node utils/build.js",
