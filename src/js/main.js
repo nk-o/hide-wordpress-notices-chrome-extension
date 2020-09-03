@@ -50,14 +50,14 @@ document.addEventListener( 'DOMContentLoaded', () => {
     const initToggleButton = throttle( 300, () => {
         if ( $noticeToggleWrap ) {
             const newNoticesCount = document.querySelectorAll( `
-                #wpbody-content > .notice,
-                #wpbody-content > .error:not(.hide-if-js),
-                #wpbody-content > .updated,
-                #wpbody-content > .update-nag,
-                #wpbody-content > .wrap > .notice,
-                #wpbody-content > .wrap > .error:not(.hide-if-js),
-                #wpbody-content > .wrap > .updated,
-                #wpbody-content > .wrap > .update-nag
+                #wpbody-content > .notice:not(.hidden),
+                #wpbody-content > .error:not(.hide-if-js):not(.hidden),
+                #wpbody-content > .updated:not(.hidden),
+                #wpbody-content > .update-nag:not(.hidden),
+                #wpbody-content > .wrap > .notice:not(.hidden),
+                #wpbody-content > .wrap > .error:not(.hide-if-js):not(.hidden),
+                #wpbody-content > .wrap > .updated:not(.hidden),
+                #wpbody-content > .wrap > .update-nag:not(.hidden)
             ` ).length;
 
             if ( newNoticesCount && noticesCount !== newNoticesCount ) {
