@@ -13,8 +13,23 @@ function setAttributes( el, attrs ) {
 
 // once DOM is ready clear the inputs
 document.addEventListener( 'DOMContentLoaded', () => {
-    const $metaLinks = document.getElementById( 'screen-meta-links' );
+    let $metaLinks = document.getElementById( 'screen-meta-links' );
     let noticesCount = 0;
+
+    // Create meta links if doesn't exists.
+    if ( ! $metaLinks ) {
+        const $wpbodyContent = document.getElementById( 'wpbody-content' );
+
+        if ( ! $wpbodyContent ) {
+            return;
+        }
+
+        $metaLinks = document.createElement( 'div' );
+        setAttributes( $metaLinks, {
+            id: 'screen-meta-links',
+        } );
+        $wpbodyContent.insertBefore( $metaLinks, $wpbodyContent.firstChild );
+    }
 
     // Create toggle button.
     const $noticeToggle = document.createElement( 'button' );
