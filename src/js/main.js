@@ -16,6 +16,12 @@ document.addEventListener( 'DOMContentLoaded', () => {
     let $metaLinks = document.getElementById( 'screen-meta-links' );
     let noticesCount = 0;
 
+    // Don't run on About pages, notices always hidden on these pages.
+    if ( document.querySelector( '#wpbody-content > .wrap.about-wrap' ) ) {
+        document.body.classList.add( 'hwn-visible' );
+        return;
+    }
+
     // Create meta links if doesn't exists.
     if ( ! $metaLinks ) {
         const $wpbodyContent = document.getElementById( 'wpbody-content' );
