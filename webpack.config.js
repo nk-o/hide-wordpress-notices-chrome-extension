@@ -1,24 +1,18 @@
-var webpack = require('webpack'),
-  path = require('path'),
-  fileSystem = require('fs'),
-  env = require('./utils/env'),
-  CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin,
-  CopyWebpackPlugin = require('copy-webpack-plugin'),
-  MiniCssExtractPlugin = require('mini-css-extract-plugin'),
-  WriteFilePlugin = require('write-file-webpack-plugin');
+const webpack = require('webpack');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin').CleanWebpackPlugin;
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 
-// load the secrets
-var alias = {};
+const env = {
+  NODE_ENV: process.env.NODE_ENV || 'development',
+  PORT: process.env.PORT || 3000,
+};
 
-var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
+const fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2'];
 
-var fileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'eot', 'otf', 'svg', 'ttf', 'woff', 'woff2'];
-
-if (fileSystem.existsSync(secretsPath)) {
-  alias['secrets'] = secretsPath;
-}
-
-var options = {
+const options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
     main: path.join(__dirname, 'src', 'js', 'main.js'),
@@ -56,9 +50,6 @@ var options = {
       },
     ],
   },
-  resolve: {
-    alias: alias,
-  },
   plugins: [
     // clean the build folder
     new CleanWebpackPlugin(),
@@ -87,7 +78,7 @@ var options = {
 };
 
 if (env.NODE_ENV === 'development') {
-  options.devtool = 'cheap-source-map';
+  options.devtool = 'inline-source-map';
 }
 
 module.exports = options;
