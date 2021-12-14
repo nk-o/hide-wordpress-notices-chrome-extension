@@ -21,8 +21,7 @@ if (fileSystem.existsSync(secretsPath)) {
 var options = {
   mode: process.env.NODE_ENV || 'development',
   entry: {
-    main: path.join(__dirname, "src", "js", "main.js"),
-    'hot-reload': path.join(__dirname, "src", "js", "hot-reload.js"),
+    main: path.join(__dirname, 'src', 'js', 'main.js'),
   },
   output: {
     path: path.join(__dirname, 'build'),
