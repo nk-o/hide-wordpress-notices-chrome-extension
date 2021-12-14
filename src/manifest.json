@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Hide WordPress Notices",
   "icons": {
-    "128": "icon-128.png"
+    "128": "assets/img/icon-128.png"
   },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
