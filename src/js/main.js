@@ -5,72 +5,70 @@ import '../img/icon-34.png';
 
 import '../css/style.scss';
 
-function setAttributes( el, attrs ) {
-    for( var key in attrs ) {
-        el.setAttribute( key, attrs[ key ] );
-    }
+function setAttributes(el, attrs) {
+  for (var key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
 }
 
 // once DOM is ready clear the inputs
-document.addEventListener( 'DOMContentLoaded', () => {
-    let $metaLinks = document.getElementById( 'screen-meta-links' );
-    let noticesCount = 0;
+document.addEventListener('DOMContentLoaded', () => {
+  let $metaLinks = document.getElementById('screen-meta-links');
+  let noticesCount = 0;
 
-    // Don't run on About pages, notices always hidden on these pages.
-    if ( document.querySelector( '#wpbody-content > .wrap.about-wrap' ) ) {
-        document.body.classList.add( 'hwn-visible' );
-        return;
+  // Don't run on About pages, notices always hidden on these pages.
+  if (document.querySelector('#wpbody-content > .wrap.about-wrap')) {
+    document.body.classList.add('hwn-visible');
+    return;
+  }
+
+  // Create meta links if doesn't exists.
+  if (!$metaLinks) {
+    const $wpbodyContent = document.getElementById('wpbody-content');
+
+    if (!$wpbodyContent) {
+      return;
     }
 
-    // Create meta links if doesn't exists.
-    if ( ! $metaLinks ) {
-        const $wpbodyContent = document.getElementById( 'wpbody-content' );
+    $metaLinks = document.createElement('div');
+    setAttributes($metaLinks, {
+      id: 'screen-meta-links',
+    });
+    $wpbodyContent.insertBefore($metaLinks, $wpbodyContent.firstChild);
+  }
 
-        if ( ! $wpbodyContent ) {
-            return;
-        }
+  // Create toggle button.
+  const $noticeToggle = document.createElement('button');
+  let $noticeToggleWrap = document.createElement('div');
 
-        $metaLinks = document.createElement( 'div' );
-        setAttributes( $metaLinks, {
-            id: 'screen-meta-links',
-        } );
-        $wpbodyContent.insertBefore( $metaLinks, $wpbodyContent.firstChild );
-    }
+  setAttributes($noticeToggle, {
+    type: 'button',
+    id: 'hwn-link',
+    class: 'button show-settings',
+    'aria-controls': 'hwn-wrap',
+    'aria-expanded': 'false',
+  });
+  $noticeToggle.innerHTML = 'Notices';
 
-    // Create toggle button.
-    const $noticeToggle = document.createElement( 'button' );
-    let $noticeToggleWrap = document.createElement( 'div' );
+  setAttributes($noticeToggleWrap, {
+    id: 'hwn-link-wrap',
+    class: 'hide-if-no-js screen-meta-toggle',
+  });
+  $noticeToggleWrap.appendChild($noticeToggle);
+  $metaLinks.appendChild($noticeToggleWrap);
 
-    setAttributes( $noticeToggle, {
-        type: 'button',
-        id: 'hwn-link',
-        class: 'button show-settings',
-        'aria-controls': 'hwn-wrap',
-        'aria-expanded': 'false',
-    } );
-    $noticeToggle.innerHTML = 'Notices';
+  // Display notices and remove toggle button on click.
+  $noticeToggle.addEventListener('click', () => {
+    document.body.classList.add('hwn-visible');
 
-    setAttributes( $noticeToggleWrap, {
-        id: 'hwn-link-wrap',
-        class: 'hide-if-no-js screen-meta-toggle',
-    } );
-    $noticeToggleWrap.appendChild( $noticeToggle );
-    $metaLinks.appendChild( $noticeToggleWrap );
+    $noticeToggleWrap.parentElement.removeChild($noticeToggleWrap);
+    $noticeToggleWrap = false;
+  });
 
-
-    // Display notices and remove toggle button on click.
-    $noticeToggle.addEventListener( 'click', () => {
-        document.body.classList.add( 'hwn-visible' );
-
-        $noticeToggleWrap.parentElement.removeChild($noticeToggleWrap);
-        $noticeToggleWrap = false;
-    } );
-
-    
-    // Init toggle button.
-    const initToggleButton = throttle( 300, () => {
-        if ( $noticeToggleWrap ) {
-            const newNoticesCount = document.querySelectorAll( `
+  // Init toggle button.
+  const initToggleButton = throttle(300, () => {
+    if ($noticeToggleWrap) {
+      const newNoticesCount = document.querySelectorAll(`
                 #wpbody-content > .notice:not(.hidden),
                 #wpbody-content > .error:not(.hide-if-js):not(.hidden),
                 #wpbody-content > .updated:not(.hidden),
@@ -79,29 +77,29 @@ document.addEventListener( 'DOMContentLoaded', () => {
                 #wpbody-content > .wrap > .error:not(.hide-if-js):not(.hidden),
                 #wpbody-content > .wrap > .updated:not(.hidden),
                 #wpbody-content > .wrap > .update-nag:not(.hidden)
-            ` ).length;
+            `).length;
 
-            if ( newNoticesCount && noticesCount !== newNoticesCount ) {
-                $noticeToggle.innerHTML = `<span>${ newNoticesCount }</span> Notices`;
-                document.body.classList.add( 'hwn-has-notices' );
-            }
-            if ( ! newNoticesCount ) {
-                document.body.classList.remove( 'hwn-has-notices' );
-            }
+      if (newNoticesCount && noticesCount !== newNoticesCount) {
+        $noticeToggle.innerHTML = `<span>${newNoticesCount}</span> Notices`;
+        document.body.classList.add('hwn-has-notices');
+      }
+      if (!newNoticesCount) {
+        document.body.classList.remove('hwn-has-notices');
+      }
 
-            noticesCount = newNoticesCount;
-        }
-    } );
-    initToggleButton();
-
-    if ( window.MutationObserver ) {
-        new window.MutationObserver( initToggleButton )
-            .observe( document.documentElement, {
-                childList: true, subtree: true,
-            } );
-    } else {
-        document.addEventListener( 'DOMContentLoaded', initToggleButton );
-        document.addEventListener( 'DOMNodeInserted', initToggleButton );
-        document.addEventListener( 'load', initToggleButton );
+      noticesCount = newNoticesCount;
     }
-} );
+  });
+  initToggleButton();
+
+  if (window.MutationObserver) {
+    new window.MutationObserver(initToggleButton).observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
+  } else {
+    document.addEventListener('DOMContentLoaded', initToggleButton);
+    document.addEventListener('DOMNodeInserted', initToggleButton);
+    document.addEventListener('load', initToggleButton);
+  }
+});

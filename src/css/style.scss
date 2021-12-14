@@ -1,59 +1,59 @@
 
 .wp-admin {
-    // Hide notices before JS loaded and after JS loaded.
-    &:not(.hwn-visible) #wpbody-content >,
-    &:not(.hwn-visible) #wpbody-content > .wrap > {
-        .notice,
-        .error,
-        .updated,
-        .update-nag {
-            display: none !important;
-        }
+  // Hide notices before JS loaded and after JS loaded.
+  &:not(.hwn-visible) #wpbody-content >,
+  &:not(.hwn-visible) #wpbody-content > .wrap > {
+    .notice,
+    .error,
+    .updated,
+    .update-nag {
+      display: none !important;
     }
+  }
 
-    // Notices toggle.
-    #hwn-link-wrap {
-        float: left;
-        margin-left: 6px;
+  // Notices toggle.
+  #hwn-link-wrap {
+    float: left;
+    margin-left: 6px;
 
-        .show-settings {
-            padding: 3px 16px 3px 16px;
-            background: #fff0d4;
-            border-color: #e4d3b3;
-            color: #8c7854;
+    .show-settings {
+      padding: 3px 16px 3px 16px;
+      background: #fff0d4;
+      border-color: #e4d3b3;
+      color: #8c7854;
 
-            &:active,
-            &:focus,
-            &:hover {
-                color: #615031;
-            }
-            &:focus {
-                border-color: #a7916a;
-                box-shadow: 0 0 3px rgba(#7d5a1a, .8);
-            }
+      &:active,
+      &:focus,
+      &:hover {
+        color: #615031;
+      }
+      &:focus {
+        border-color: #a7916a;
+        box-shadow: 0 0 3px rgba(#7d5a1a, .8);
+      }
 
-            // Badge
-            > span {
-                display: inline-block;
-                vertical-align: top;
-                box-sizing: border-box;
-                margin: 2px 5px -1px -2px;
-                padding: 0 5px;
-                min-width: 1.75em;
-                height: 1.75em;
-                border-radius: 1em;
-                background-color: #ca4a1f;
-                color: #fff;
-                font-size: .8em;
-                line-height: 1.6;
-                text-align: center;
-            }
-        }
-        .show-settings::after {
-            content: none;
-        }
+      // Badge
+      > span {
+        display: inline-block;
+        vertical-align: top;
+        box-sizing: border-box;
+        margin: 2px 5px -1px -2px;
+        padding: 0 5px;
+        min-width: 1.75em;
+        height: 1.75em;
+        border-radius: 1em;
+        background-color: #ca4a1f;
+        color: #fff;
+        font-size: .8em;
+        line-height: 1.6;
+        text-align: center;
+      }
     }
-    &:not(.hwn-has-notices) #hwn-link-wrap {
-        display: none;
+    .show-settings::after {
+      content: none;
     }
+  }
+  &:not(.hwn-has-notices) #hwn-link-wrap {
+    display: none;
+  }
 }
